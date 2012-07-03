@@ -2,17 +2,20 @@
 <html>
 	<head>
 		<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+		<script type="text/javascript" src="http://code.jquery.com/ui/1.8.21/jquery-ui.min.js"></script>
 		<script type="text/javascript" src="BRAGViewer.js"></script>
+		<script type="text/javascript" src="jquery.tinyscrollbar.min.js"></script>
+		<link href="bragv.css" type="test/css" rel="stylesheet" />
 		<script>
 			var test;
 		
 			$(function(){
 				test = new BRAGV.Viewer('brag_test');
-			})
-		
+				test.loadAnnotation('./test/data/Streptococcus_pneumoniae_ATCC_700669_v1.gff.json');
+			});
 		</script>
 	</head>
 	<body width="100%">
-		<div id="brag_test" width="100%" height="800">&nbsp;</div>
+		<div id="brag_test" width="100%" height="200">&nbsp;</div>
 	</body>
 </html>

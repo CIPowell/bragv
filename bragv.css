@@ -1,0 +1,81 @@
+/*horzontal Scroller*/
+
+.bragv_scroller.bragv_horizontal
+{
+	position: relative;
+	margin	: 0px 49px 0px 24px;
+	height : 24px;
+	background-color : #eeeeee;
+}
+
+.bragv_horizontal .bragv_scroller_ctl_lesser
+{
+	top: 0;
+	left : -24px;
+	width : 24px;
+	height : 100%;
+	position: absolute;
+	background-color: #888888;
+}
+
+.bragv_horizontal .bragv_scroller_ctl_greater
+{
+	position: absolute;
+	top: 0;
+	right : -24px;
+	width : 24px;
+	height : 100%;
+	background-color: #888888;
+}
+
+.bragv_horizontal .bragv_scroller_handle
+{
+	top: 0;
+	left : 0;
+	width : 24px;
+	height : 100%;
+	position: absolute;
+	background-color: black;
+}
+
+/* vertical Scroller */
+
+.bragv_scroller.bragv_vertical
+{
+	position: relative;
+	display: block;
+	margin: 24px 0px 49px 0px;
+	width : 24px;
+	background-color : #eeeeee;
+	float:right;
+}
+
+.bragv_vertical .bragv_scroller_ctl_lesser
+{
+	bottom: -24px;
+	left : 0px;
+	height : 24px;
+	width : 100%;
+	position: absolute;
+	background-color: #888888;
+}
+
+.bragv_vertical .bragv_scroller_ctl_greater
+{
+	position: absolute;
+	top: -24px;
+	right : 0px;
+	height : 24px;
+	width : 100%;
+	background-color: #888888;
+}
+
+.bragv_vertical .bragv_scroller_handle
+{
+	bottom: 0;
+	left : 0;
+	height : 24px;
+	width : 100%;
+	position: absolute;
+	background-color: black;
+}
