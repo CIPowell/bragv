@@ -14,7 +14,9 @@ BRAGV.Viewer = function(divName)
 {
 	this.offset = 0;
 	this.numBases = 100000;
-	
+	/**
+	 * The length of the chromosome
+	 */
 	this.c_length = 1000000;
 	
 	this.lastDraw = 0;
@@ -284,14 +286,14 @@ BRAGV.Viewer.prototype = {
 			val = Math.round((val / this.horizontalScroller.max) * (this.c_length - this.numBases));
 			
 			this.offset = Math.round(val);
-			this.nextDraw = setTimeout(function(){d.draw();}, this.numBases > 100000 ? 100 : 10);
+			this.nextDraw = setTimeout(function(){d.draw();}, this.numBases > 1000000 ? 100 : 10);
 		},
 		setZoom : function(val)
 		{
 			clearTimeout(this.nextDraw);
 			var d = this;
 			this.numBases = Math.pow(10,Math.round(val / 20) + 1);
-			this.nextDraw = setTimeout(function(){d.draw();}, this.numBases > 100000 ? 100 : 10);
+			this.nextDraw = setTimeout(function(){d.draw();}, this.numBases > 1000000 ? 100 : 10);
 		}
 };
 
