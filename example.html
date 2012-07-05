@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		
-	
 		<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
 		<script type="text/javascript" src="http://code.jquery.com/ui/1.8.21/jquery-ui.min.js"></script>
 		<script type="text/javascript" src="BRAGViewer.js"></script>
@@ -13,10 +11,28 @@
 			$(function(){
 				test = new BRAGV.Viewer('brag_test');
 				test.loadAnnotation('./test/data/Streptococcus_pneumoniae_ATCC_700669_v1.gff.json');
+				test.trackClicked = function(evt)
+				{
+					$('tbody').html('<tr><td>' + evt.track + '</td><td>' + evt.base + '</td><td>' + evt.feature.n + '</td><td>' + evt.feature.s + '</td><td>' + evt.feature.e + '</td></tr>')
+				}
 			});
 		</script>
+		<style>
+			body 
+			{
+				font-family : 'Helvetica';
+			}
+		</style>
 	</head>
 	<body width="100%">
 		<div id="brag_test" width="100%"></div>
+		<h2>Selected Feature</h2>
+		<table>
+			<thead>
+				<tr><th>Track</th><th>base</th><th>feature name</th><th>feature start</th><th>feature end</th></tr>
+			</thead>
+			<tbody>
+			</tbody>
+		</table>
 	</body>
 </html>

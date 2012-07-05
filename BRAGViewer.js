@@ -23,13 +23,20 @@ BRAGV.Viewer = function(divName)
 	this.end = 0;
 	
 	this.tracks = {};
+	this.trackIndex = [];
 	
 	this.labelWidth = 40.0;
+	this.selectedColour = 'rgba(0, 0, 255, 1)';
 	
 	var div = $(document.getElementById(divName));
 	
 	var w = div.innerWidth() - 25;
 	var h = 200;
+	
+	/**
+	 * An array containing the track id and the index of the selected feature;
+	 */
+	this.selectedFeature = [null, null];
 	
 	div.append('<canvas id='+ divName + '_Viewer width="'+w+'" height="'+h+'" class="bragv_canvas"></canvas>');
 	
@@ -64,6 +71,54 @@ BRAGV.Viewer = function(divName)
 		this.tracks["track6"] = new BRAGV.Track();
 	}*/
 	this.verticalScroller.setValue(80);
+	
+	div.click(function(evt){
+		var x = evt.offsetX;
+		var y = evt.offsetY;
+		
+		console.debug(x + ',' + y + ' :: ' + vwr.labelWidth + ', 20') ;
+		
+		if(x > vwr.labelWidth && y > 23)
+		{
+			var t = y/23;
+			t = t - (t%1) -1;
+			console.debug('track ' + t + ' :: ' + vwr.trackIndex[t]);
+			
+			var b = x - vwr.labelWidth;
+			b = b / vwr.baseWidth;
+			b = b - (b%1);
+			b = b + vwr.offset;
+			console.debug('base ' + b);
+			
+			var f = null; var fi = null;
+			var features = vwr.tracks[vwr.trackIndex[t]].features;
+			var count = features.length;
+			for(var i = count; i--; )
+			{
+				if(b >= features[i].s && b <= features[i].e)
+				{
+					console.debug('feature : ' + features[i].n);
+					f = features[i];
+					fi = i;
+					break;
+				}
+			}
+			//console.debug('no feature');
+			
+			vwr.selectedFeature = [vwr.trackIndex[t], fi];
+			
+			if(vwr.trackClicked)
+			{
+				vwr.trackClicked({
+					track : t+1,
+					base : b,
+					feature : f,
+					featureIndex : fi
+				});
+			}
+			test.draw();
+		}
+	});
 };
 
 BRAGV.Viewer.prototype = {
@@ -139,7 +194,18 @@ BRAGV.Viewer.prototype = {
 					
 					if((start+width) < (this.lastpos + 1)) continue;
 					this.lastpos = start + width;
-					this.ctx.fillStyle = 'rgba(255, 0, 0, 1)';
+					if(this.selectedFeature[0] == t && this.selectedFeature[1] == j)
+					{
+						this.ctx.fillStyle = this.selectedColour;
+					}
+					else if(!features[j].c)
+					{
+						this.ctx.fillStyle = 'rgba(255, 0, 0, 1)';
+					}
+					else
+					{
+						this.ctx.fillStyle = features[j].c;
+					}
 					this.ctx.fillRect(start, tracky, width, trackheight);
 					
 					
@@ -202,6 +268,7 @@ BRAGV.Viewer.prototype = {
 				if(!viewer.tracks[id])viewer.tracks[id] = new BRAGV.Track(id);
 				viewer.tracks[id].isReverse = obj[i].strand < 0;
 				viewer.tracks[id].features = obj[i].features;
+				viewer.trackIndex[i] = id;
 			}
 			this.draw();
 		},
@@ -217,14 +284,14 @@ BRAGV.Viewer.prototype = {
 			val = Math.round((val / this.horizontalScroller.max) * (this.c_length - this.numBases));
 			
 			this.offset = Math.round(val);
-			this.nextDraw = setTimeout(function(){d.draw();}, this.numBases > 50000 ? 100 : 10);
+			this.nextDraw = setTimeout(function(){d.draw();}, this.numBases > 100000 ? 100 : 10);
 		},
 		setZoom : function(val)
 		{
 			clearTimeout(this.nextDraw);
 			var d = this;
 			this.numBases = Math.pow(10,Math.round(val / 20) + 1);
-			this.nextDraw = setTimeout(function(){d.draw();}, this.numBases > 50000 ? 100 : 10);
+			this.nextDraw = setTimeout(function(){d.draw();}, this.numBases > 100000 ? 100 : 10);
 		}
 };
 
