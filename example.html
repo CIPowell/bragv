@@ -11,10 +11,19 @@
 			$(function(){
 				test = new BRAGV.Viewer('brag_test');
 				test.loadAnnotation('./test/data/Streptococcus_pneumoniae_ATCC_700669_v1.gff.json');
-				test.trackClicked = function(evt)
+			
+				$('#brag_test').bind('trackClicked', function(evt)
 				{
-					$('tbody').html('<tr><td>' + evt.track + '</td><td>' + evt.base + '</td><td>' + evt.feature.n + '</td><td>' + evt.feature.s + '</td><td>' + evt.feature.e + '</td></tr>')
-				}
+					window.evt = evt;
+					if(evt.feature)
+					{
+						$('tbody').html('<tr><td>' + evt.track + '</td><td>' + evt.base + '</td><td>' + evt.feature.n + '</td><td>' + evt.feature.s + '</td><td>' + evt.feature.e + '</td></tr>')
+					}
+					else
+					{
+						$('tbody').html('<tr><td>' + evt.track + '</td><td>' + evt.base + '</td><td></td><td></td><td></td></tr>')
+					}
+				});
 			});
 		</script>
 		<style>

@@ -5,7 +5,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="generator" content="JsDoc Toolkit" />
 		
-		<title>JsDoc Reference - BRAGV</title>
+		<title>JsDoc Reference - BRAGV.Viewer</title>
 
 		<style type="text/css">
 			/* default.css */
@@ -204,7 +204,7 @@ ul.inheritsList
 <!-- ============================== class title ============================ -->
 			<h1 class="classTitle">
 				
-				Namespace BRAGV
+				Class BRAGV.Viewer
 			</h1>
 
 <!-- ============================== class summary ========================== -->			
@@ -212,7 +212,7 @@ ul.inheritsList
 				
 				
 			
-				BRAGV
+				
 				
 				
 					<br /><i>Defined in: </i> <a href="../symbols/src/_Users_christopherpowell_Sites_bragv_BRAGViewer.js.html">BRAGViewer.js</a>.
@@ -221,8 +221,8 @@ ul.inheritsList
 
 <!-- ============================== constructor summary ==================== -->			
 			
-			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class BRAGV.">
-				<caption>Namespace Summary</caption>
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class BRAGV.Viewer.">
+				<caption>Class Summary</caption>
 				<thead>
 					<tr>
 						<th scope="col">Constructor Attributes</th>
@@ -234,9 +234,9 @@ ul.inheritsList
 						<td class="attributes">&nbsp;</td>
 						<td class="nameDescription" >
 							<div class="fixedFont">
-								<b><a href="../symbols/BRAGV.html#constructor">BRAGV</a></b>
+								<b><a href="../symbols/BRAGV.Viewer.html#constructor">BRAGV.Viewer</a></b>(divName)
 							</div>
-							<div class="description">Bacterial Reference Annotation Genome Viewer</div>
+							<div class="description">The viewer object that contains all the elements of BRAGV</div>
 						</td>
 					</tr>
 				</tbody>
@@ -245,25 +245,85 @@ ul.inheritsList
 
 <!-- ============================== properties summary ===================== -->
 			
-
-<!-- ============================== methods summary ======================== -->
-			
 				
 				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class BRAGV.">
-					<caption>Method Summary</caption>
+				<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class BRAGV.Viewer.">
+					<caption>Field Summary</caption>
 					<thead>
 						<tr>
-							<th scope="col">Method Attributes</th>
-							<th scope="col">Method Name and Description</th>
+							<th scope="col">Field Attributes</th>
+							<th scope="col">Field Name and Description</th>
 						</tr>
 					</thead>
 					<tbody>
 					
 						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">BRAGV.<b><a href="../symbols/BRAGV.html#.Track">Track</a></b>(trackName)
+								<div class="fixedFont">
+								<b><a href="../symbols/BRAGV.Viewer.html#c_length">c_length</a></b>
+								</div>
+								<div class="description">The length of the chromosome</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								<b><a href="../symbols/BRAGV.Viewer.html#firstSelectedBase">firstSelectedBase</a></b>
+								</div>
+								<div class="description">The first base in the selection (Null if no bases are selected)</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								<b><a href="../symbols/BRAGV.Viewer.html#lastSelectedBase">lastSelectedBase</a></b>
+								</div>
+								<div class="description">The last base in the selection (Null if no bases are selected)</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								<b><a href="../symbols/BRAGV.Viewer.html#selectedFeature">selectedFeature</a></b>
+								</div>
+								<div class="description">An array containing the track id and the index of the selected feature;</div>
+							</td>
+						</tr>
+					
+					</tbody>
+				</table>
+				
+				
+				
+			
+
+<!-- ============================== methods summary ======================== -->
+			
+<!-- ============================== events summary ======================== -->
+			
+				
+				
+				<table class="summaryTable" cellspacing="0" summary="A summary of the events documented in the class BRAGV.Viewer.">
+					<caption>Event Summary</caption>
+					<thead>
+						<tr>
+							<th scope="col">Event Attributes</th>
+							<th scope="col">Event Name and Description</th>
+						</tr>
+					</thead>
+					<tbody>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/BRAGV.Viewer.html#event:trackClicked">trackClicked</a></b>(track,)
 								</div>
 								<div class="description"></div>
 							</td>
@@ -275,28 +335,37 @@ ul.inheritsList
 				
 				
 			
-<!-- ============================== events summary ======================== -->
-			
 
 <!-- ============================== constructor details ==================== -->		
 			
 			<div class="details"><a name="constructor"> </a>
 				<div class="sectionTitle">
-					Namespace Detail
+					Class Detail
 				</div>
 				
 				<div class="fixedFont">
-						<b>BRAGV</b>
+						<b>BRAGV.Viewer</b>(divName)
 				</div>
 				
 				<div class="description">
-					Bacterial Reference Annotation Genome Viewer
+					The viewer object that contains all the elements of BRAGV
 					
 				</div>
 				
 				
 				
 				
+					
+						<dl class="detailList">
+						<dt class="heading">Parameters:</dt>
+						
+							<dt>
+								<span class="light fixedFont">{string}</span>  <b>divName</b>
+								
+							</dt>
+								<dd></dd>
+						
+						</dl>
 					
 					
 					
@@ -310,18 +379,114 @@ ul.inheritsList
 
 <!-- ============================== field details ========================== -->		
 			
+				<div class="sectionTitle">
+					Field Detail
+				</div>
+				
+					<a name="c_length"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>c_length</b>
+					
+					</div>
+					<div class="description">
+						The length of the chromosome
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="firstSelectedBase"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>firstSelectedBase</b>
+					
+					</div>
+					<div class="description">
+						The first base in the selection (Null if no bases are selected)
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="lastSelectedBase"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>lastSelectedBase</b>
+					
+					</div>
+					<div class="description">
+						The last base in the selection (Null if no bases are selected)
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="selectedFeature"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>selectedFeature</b>
+					
+					</div>
+					<div class="description">
+						An array containing the track id and the index of the selected feature;
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					
+				
+			
 
 <!-- ============================== method details ========================= -->		
 			
+			
+<!-- ============================== event details ========================= -->		
+			
 				<div class="sectionTitle">
-					Method Detail
+					Event Detail
 				</div>
 				
-					<a name=".Track"> </a>
-					<div class="fixedFont">&lt;static&gt; 
+					<a name="event:trackClicked"> </a>
+					<div class="fixedFont">
 					
 					
-					<span class="light">BRAGV.</span><b>Track</b>(trackName)
+					<b>trackClicked</b>(track,)
 					
 					</div>
 					<div class="description">
@@ -337,10 +502,10 @@ ul.inheritsList
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<span class="light fixedFont">{string}</span> <b>trackName</b>
+									<span class="light fixedFont">{Object}</span> <b>track,</b>
 									
 								</dt>
-								<dd>the name of this track</dd>
+								<dd>base, feature,	 featureIndex</dd>
 							
 							</dl>
 						
@@ -353,9 +518,6 @@ ul.inheritsList
 
 					
 				
-			
-			
-<!-- ============================== event details ========================= -->		
 			
 			
 			<hr />
