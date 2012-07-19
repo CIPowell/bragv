@@ -5,7 +5,7 @@
 		<script type="text/javascript" src="http://code.jquery.com/ui/1.8.21/jquery-ui.min.js"></script>
 		<script type="text/javascript" src="BRAGViewer.js"></script>
 		<link href="./bragv.css" type="text/css" rel="stylesheet" />
-		<script>
+		<script type="text/javascript">
 			var test;
 		
 			$(function(){
@@ -23,6 +23,10 @@
 					{
 						$('tbody').html('<tr><td>' + evt.track + '</td><td>' + evt.base + '</td><td></td><td></td><td></td></tr>')
 					}
+				});
+				
+				$('#brag_test').bind('selected', function(evt){
+					alert('Selected from base ' + evt.startbase + ' to base '+ evt.endbase);					
 				});
 			});
 		</script>

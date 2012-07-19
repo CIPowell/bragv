@@ -14,6 +14,8 @@ var debug = true;
  */
 BRAGV.Viewer = function(divName)
 {
+	this.selectThreshold = 5;
+	
 	this.offset = 0;
 	this.numBases = 100000;
 	/**
@@ -22,9 +24,23 @@ BRAGV.Viewer = function(divName)
 	this.c_length = 1000000;
 	
 	this.lastDraw = 0;
-	
+	/**
+	 * The first base being displayed by the viewer
+	 */
 	this.start = 0;
+	/**
+	 * The last base being displayed by the viewer
+	 */
 	this.end = 0;
+	
+	/**
+	 * the first base being selected
+	 */
+	this.selection_start = null;
+	/**
+	 * the last base selected
+	 */
+	this.selection_end = null;
 	
 	this.tracks = {};
 	this.trackIndex = [];
@@ -85,8 +101,14 @@ BRAGV.Viewer = function(divName)
 	this.verticalScroller.setValue(100);
 	
 	div.click(function(evt){
-		var x = evt.offsetX;
-		var y = evt.offsetY;
+		if(vwr.preventClick) 
+		{
+			vwr.preventClick = false;
+			return;
+		}
+		
+		var x = evt.clientX - evt.target.offsetLeft;
+		var y = evt.clientY - evt.target.offsetTop;
 		
 		console.debug(x + ',' + y + ' :: ' + vwr.labelWidth + ', 20') ;
 		
@@ -97,12 +119,7 @@ BRAGV.Viewer = function(divName)
 			if(t >= vwr.trackIndex.length) return;
 			console.debug('track ' + t + ' :: ' + vwr.trackIndex[t]);
 			
-			/*var b = x - vwr.labelWidth;
-			b = b / vwr.baseWidth;
-			b = b - (b%1);
-			b = b + vwr.offset;
-			console.debug('base ' + b);*/
-			var b = vwr.getBase();
+			var b = vwr.getBaseAt(x,y);
 			
 			var f = null; var fi = null;
 			
@@ -115,7 +132,7 @@ BRAGV.Viewer = function(divName)
 			{
 				if(b >= features[i].s && b <= features[i].e)
 				{
-					console.debug('feature : ' + features[i].n);
+					if(debug)console.debug('feature : ' + features[i].n);
 					f = features[i];
 					fi = i;
 					break;
@@ -128,18 +145,49 @@ BRAGV.Viewer = function(divName)
  * @name Viewer#trackClicked
  * @event
  * @memberOf BRAGV
- * @param {Object} track, base, feature,	 featureIndex
+ * @param {Object} eventData (track, base, feature,	 featureIndex)
  */			
 			div.trigger({
-					type: 'trackClicked', 
-					track : t+1,
-					base : b,
-					feature : f,
-					featureIndex : fi
-				});
+				type: 'trackClicked', 
+				track : t+1,
+				base : b,
+				feature : f,
+				featureIndex : fi
+			});
 			
 			test.draw();
 		}
+	});
+	
+	div.mousedown(function(evt){
+		console.debug(vwr.getTrackAt(evt.clientX, evt.clientY) > vwr.trackIndex.length);
+		if(vwr.getTrackAt(evt.clientX, evt.clientY) > vwr.trackIndex.length) return;
+		vwr.selectStart = evt.clientX - evt.target.offsetLeft;
+		vwr.selection_start = null;
+		vwr.selection_end = null;
+	});
+	div.mousemove(function(evt){
+		if(!vwr.selectStart) return;
+		
+		var end = (evt.clientX - evt.target.offsetLeft);
+		var dist = Math.abs(end - vwr.selectStart);
+		if(dist > vwr.selectThreshold)
+		{
+			vwr.preventClick = true;
+			vwr.selection_end = vwr.getBaseAt(end, 0);
+			vwr.selection_start = vwr.getBaseAt(vwr.selectStart, 0);
+			vwr.draw();
+		}
+	});
+	div.mouseup(function(evt){
+		vwr.selectStart = null;
+		if(!vwr.selection_end) return;
+		vwr.draw();
+		div.trigger({
+			type: 'selected', 
+			startbase: vwr.selection_start,
+			endbase : vwr.selection_end
+		});
 	});
 };
 
@@ -151,6 +199,7 @@ BRAGV.Viewer.prototype = {
 			this.resetViewer(thisDraw);
 			this.drawTicks(thisDraw);
 			this.drawTracks(this.trackWidth, thisDraw);
+			if(this.selection_end) this.drawSelection();
 		},
 		drawTicks : function(thisDraw)
 		{
@@ -176,6 +225,16 @@ BRAGV.Viewer.prototype = {
 			var txt = (this.offset + this.numBases).toString();
 			var wt = this.ctx.measureText(txt).width;
 			this.ctx.fillText(txt, end-wt, 10);
+		},
+		drawSelection : function()
+		{
+			var start = this.labelWidth + (this.selection_start * this.baseWidth);
+			var end = this.labelWidth + (this.selection_end * this.baseWidth);
+			var width = end-start;
+			//console.debug('selection from ' + start + ' to ' + end);
+			
+			this.ctx.fillStyle = 'rgba(80,80,80,0.3)';
+			this.ctx.fillRect(start, 20, width, 23 * this.trackIndex.length);
 		},
 		drawTracks : function(w, thisDraw)
 		{
@@ -303,10 +362,10 @@ BRAGV.Viewer.prototype = {
 		},
 		getBaseAt : function(x,y)
 		{
-			var b = x - vwr.labelWidth;
-			b = b / vwr.baseWidth;
+			var b = x - this.labelWidth;
+			b = b / this.baseWidth;
 			b = b - (b%1);
-			b = b + vwr.offset;
+			b = b + this.offset;
 			return b;
 		},
 		getFeatureAt : function(x,y)
@@ -316,7 +375,7 @@ BRAGV.Viewer.prototype = {
 			var t = y/23;
 			t = t - (t%1) -1;
 			
-			var features = vwr.tracks[vwr.trackIndex[t]].features;
+			var features = this.tracks[this.trackIndex[t]].features;
 			var count = features.length;
 			for(var i = count; i--; )
 			{
@@ -342,14 +401,14 @@ BRAGV.Viewer.prototype = {
 			val = Math.round((val / this.horizontalScroller.max) * (this.c_length - this.numBases));
 			
 			this.offset = Math.round(val);
-			this.nextDraw = setTimeout(function(){d.draw();}, this.numBases > 1000000 ? 100 : 10);
+			this.nextDraw = setTimeout(function(){d.draw();}, this.numBases > 10000000 ? 100 : 5);
 		},
 		setZoom : function(val)
 		{
 			clearTimeout(this.nextDraw);
 			var d = this;
 			this.numBases = Math.pow(10,Math.round(val / 20) + 1);
-			this.nextDraw = setTimeout(function(){d.draw();}, this.numBases > 1000000 ? 100 : 10);
+			this.nextDraw = setTimeout(function(){d.draw();}, this.numBases > 10000000 ? 100 : 5);
 		}
 };
 
