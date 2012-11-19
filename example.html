@@ -10,14 +10,20 @@
 		
 			$(function(){
 				test = new BRAGV.Viewer('brag_test');
-				test.loadAnnotation('./test/data/Streptococcus_pneumoniae_ATCC_700669_v1.gff.json');
+				test.loadAnnotation('./test/data/BX571856.json');
 			
 				$('#brag_test').bind('trackClicked', function(evt)
 				{
 					window.evt = evt;
 					if(evt.feature)
 					{
-						$('tbody').html('<tr><td>' + evt.track + '</td><td>' + evt.base + '</td><td>' + evt.feature.n + '</td><td>' + evt.feature.s + '</td><td>' + evt.feature.e + '</td></tr>')
+						$('tbody').empty();
+						
+						feats = evt.feature_list;
+						for(var i = 0; i < feats.length; i++)
+						{
+							$('tbody').html('<tr><td>' + evt.track + '</td><td>' + evt.base + '</td><td>' + feats[i].name + '</td><td>' + feats[i].start + '</td><td>' + feats[i].end + '</td><td>' + feats[i].description + '</td></tr>')
+						}
 					}
 					else
 					{
@@ -35,14 +41,20 @@
 			{
 				font-family : 'Helvetica';
 			}
+			
+			#brag_test
+			{
+				width : 100%;
+				height: 250px;
+			}
 		</style>
 	</head>
 	<body width="100%">
-		<div id="brag_test" width="100%"></div>
+		<div id="brag_test" width="100%" height="250"></div>
 		<h2>Selected Feature</h2>
 		<table>
 			<thead>
-				<tr><th>Track</th><th>base</th><th>feature name</th><th>feature start</th><th>feature end</th></tr>
+				<tr><th>Track</th><th>base</th><th>feature name</th><th>feature start</th><th>feature end</th><th>description</th></tr>
 			</thead>
 			<tbody>
 			</tbody>

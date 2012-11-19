@@ -2,20 +2,23 @@
 
 .bragv_scroller.bragv_horizontal
 {
-	position: relative;
+	position: absolute;
 	margin	: 0px 49px 0px 24px;
 	height : 24px;
-	background-color : #eeeeee;
+	bottom: 2px;
+	left : 2px;
+	right: 2px;
 }
 
 .bragv_horizontal .bragv_scroller_ctl_lesser
 {
 	top: 0;
 	left : -24px;
-	width : 24px;
-	height : 100%;
+	width : 26px;
+	height : 26px;
 	position: absolute;
-	background-color: #888888;
+	background: url('images/arrow_left.png') no-repeat;
+	cursor: pointer;
 }
 
 .bragv_horizontal .bragv_scroller_ctl_greater
@@ -23,59 +26,58 @@
 	position: absolute;
 	top: 0;
 	right : -24px;
-	width : 24px;
-	height : 100%;
-	background-color: #888888;
+	width : 26px;
+	height : 26px;
+	background: url('images/arrow_right.png') no-repeat top left;
+	cursor: pointer;
 }
 
 .bragv_horizontal .bragv_scroller_handle
 {
-	top: 0;
-	left : 0;
-	width : 24px;
-	height : 100%;
+	top: 20%;
+	left: 10px;
+	right: 10px;
 	position: absolute;
-	background-color: black;
 }
 
 /* vertical Scroller */
 
 .bragv_scroller.bragv_vertical
 {
-	position: relative;
+	position: absolute;
 	display: block;
 	margin: 24px 0px 49px 0px;
 	width : 24px;
-	background-color : #eeeeee;
-	float:right;
-}
-
-.bragv_vertical .bragv_scroller_ctl_lesser
-{
-	bottom: -24px;
-	left : 0px;
-	height : 24px;
-	width : 100%;
-	position: absolute;
-	background-color: #888888;
+	right: 2px;
+	top: 2px;
+	bottom: 2px;
 }
 
 .bragv_vertical .bragv_scroller_ctl_greater
 {
-	position: absolute;
 	top: -24px;
+	left : 0px;
+	height : 24px;
+	width : 100%;
+	position: absolute;
+	background: url('images/zoom_in.png') no-repeat;
+	cursor: pointer;
+}
+
+.bragv_vertical .bragv_scroller_ctl_lesser
+{
+	position: absolute;
+	bottom: -28px;
 	right : 0px;
 	height : 24px;
 	width : 100%;
-	background-color: #888888;
+	background: url('images/zoom_out.png') no-repeat;
+	cursor: pointer;
 }
 
 .bragv_vertical .bragv_scroller_handle
 {
-	bottom: 0;
-	left : 0;
-	height : 24px;
-	width : 100%;
-	position: absolute;
-	background-color: black;
+	height : 90%;
+	margin-top : 8px;
+	margin-bottom: 10px;
 }
